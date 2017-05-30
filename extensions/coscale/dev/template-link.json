@@ -22,7 +22,7 @@
                 "value": "[concat(variables('masterVMNamePrefix'), '0')]"
             },
             "extensionParameters": {
-                "value": ""
+                "value": "[parameters('docker-username')] [parameters('docker-password')]"
             }
         }
     }
