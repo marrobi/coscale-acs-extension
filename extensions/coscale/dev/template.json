@@ -33,7 +33,7 @@
    },
    "variables": {  
 		"singleQuote": "'",
-		"initScriptUrl": "[concat(parameters('artifactsLocation'), 'extensions/helm-test/dev/install.sh')]"
+		"initScriptUrl": "[concat(parameters('artifactsLocation'), 'coscale/dev/install.sh')]"
    },
    "resources": [  
 	{
@@ -53,7 +53,7 @@
 			 ]
 		},
         "protectedSettings": {
-			"commandToExecute": "[concat('/bin/bash -c \"/bin/bash ./install.sh ', variables('singleQuote'), parameters('extensionParameters'), variables('singleQuote'), ' >> /var/log/azure/hello-world-provision.log 2>&1 &\" &')]"
+			"commandToExecute": "[concat('/bin/bash -c \"/bin/bash ./install.sh ', variables('singleQuote'), parameters('extensionParameters'), variables('singleQuote'), ' >> /var/log/azure/coscale-provisioning.log 2>&1 &\" &')]"
         }
       }
     }

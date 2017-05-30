@@ -1,19 +1,19 @@
 {
-    "name": "helm-test",
+    "name": "coscale",
     "type": "Microsoft.Resources/deployments",
-    "apiVersion": "[variables('apiVersionLinkDefault')]",
+    "apiVersion": "2017-05-10",
     "dependsOn": [
         "vmLoopNode"
     ],
     "properties": {
         "mode": "Incremental",
         "templateLink": {
-            "uri": "EXTENSION_URL_REPLACEextensions/helm-test/template.json",
+            "uri": "https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/extensions/coscale/dev/template.json",
             "contentVersion": "1.0.0.0"
         },
         "parameters": {
             "artifactsLocation": {
-                "value": "EXTENSION_URL_REPLACE"
+                "value": "https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/extensions/"
             },
             "apiVersionCompute": {
                 "value": "[variables('apiVersionDefault')]"
