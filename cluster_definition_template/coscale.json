@@ -8,9 +8,8 @@
     "masterProfile": {
       "count": "__MASTERCOUNT__",
       "dnsPrefix": "__DNSPREFIX__",
-      "vmSize": "__MASTERVMSIZE__",
+      "vmSize": "__MASTERVMSIZE__"
      
-    ]
     },
     "agentPoolProfiles": [
       {
