@@ -44,8 +44,8 @@
         "name": "coscale", 
 
         "version": "dev" ,
-      "RootURL":"https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/"
-
+        "RootURL":"https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/",
+        "extensionParameters": "DockerCredentials"
       }
   ]
   }
