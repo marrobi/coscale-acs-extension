@@ -16,6 +16,10 @@ kubectl create secret docker-registry coscale-registry \
     --docker-email='dummy@coscale.com' \
     --namespace=default
 
+#Downloading charts
+curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-data-services-0.1.0.tgz -o coscale-data-services-0.1.0.tgz
+curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-app-0.1.0.tgz -o coscale-app-0.1.0.tgz
+
 helm install --name CoScaleDataServices --wait --timeout 1800 coscale-data-services-0.1.0.tgz
 
 # Initialise the keyspace in Cassandra
