@@ -16,4 +16,31 @@ kubectl create secret docker-registry coscale-registry \
     --docker-email='dummy@coscale.com' \
     --namespace=default
 
-helm install --name CoScale --wait --timeout 1800 coscale-data-services-0.1.0.tgz
+helm install --name CoScaleDataServices --wait --timeout 1800 coscale-data-services-0.1.0.tgz
+
+# Initialise the keyspace in Cassandra
+cat << EOF | kubectl create -f -
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: cs-init
+spec:
+  template:
+    metadata:
+      labels:
+        app: cs-init
+    spec:
+      containers:
+      - name: init
+        image: gcr.io/google-samples/cassandra:v11
+        imagePullPolicy: Always
+        command: [ "/bin/bash", "-c" ]
+        args: [ "/bin/echo \"create keyspace coscale with replication = { 'class' : 'SimpleStrategy', 'replication_factor' : 1 };\" | /usr/bin/cqlsh cassandra" ]
+      restartPolicy: Never
+EOF
+
+helm install --name CoScaleAppServices --wait --timeout 1800 coscale-app-services-0.1.0.tgz
+
+API1=`kubectl get pods -l app=cs-api -o jsonpath='{.items[0].metadata.name}'`
+kubectl exec $API1 python /opt/coscale/api/gen-superuser.py
+kubectl exec $API1 /opt/coscale/agent-builder/agent-builder-standalone
