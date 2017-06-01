@@ -1,7 +1,10 @@
-docker-username=$1
-docker-password=$2
+#!/bin/bash -e
 
-curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh 
+DOCKER_USERNAME=${1}
+DOCKER_PASSWORD=${2}
+
+#Getting helm
+curl https://raw.githubusercontent.com/kubernetes/helm/master/scripts/get > get_helm.sh -sS
 
 chmod 700 get_helm.sh 
 
@@ -11,14 +14,14 @@ helm init
 
 kubectl create secret docker-registry coscale-registry \
     --docker-server=docker.coscale.com \
-    --docker-username=$docker-username \
-    --docker-password=$docker-password \
+    --docker-username=$DOCKER_USERNAME \
+    --docker-password=$DOCKER_PASSWORD \
     --docker-email='dummy@coscale.com' \
     --namespace=default
 
 #Downloading charts
-curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-data-services-0.1.0.tgz -o coscale-data-services-0.1.0.tgz
-curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-app-0.1.0.tgz -o coscale-app-0.1.0.tgz
+curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-data-services-0.1.0.tgz -o coscale-data-services-0.1.0.tgz -sS
+curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-app-0.1.0.tgz -o coscale-app-0.1.0.tgz -sS
 
 helm install --name CoScaleDataServices --wait --timeout 1800 coscale-data-services-0.1.0.tgz
 
