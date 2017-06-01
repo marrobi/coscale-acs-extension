@@ -39,7 +39,7 @@ spec:
       restartPolicy: Never
 EOF
 
-helm install --name CoScaleAppServices --wait --timeout 1800 coscale-app-services-0.1.0.tgz
+helm install --name CoScaleAppServices --wait --timeout 1800 coscale-app-0.1.0.tgz
 
 API1=`kubectl get pods -l app=cs-api -o jsonpath='{.items[0].metadata.name}'`
 kubectl exec $API1 python /opt/coscale/api/gen-superuser.py
