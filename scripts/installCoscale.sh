@@ -23,7 +23,7 @@ kubectl create secret docker-registry coscale-registry \
 curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-data-services-0.1.0.tgz -o coscale-data-services-0.1.0.tgz -sS
 curl https://raw.githubusercontent.com/marrobi/coscale-acs-extension/master/scripts/coscale-app-0.1.0.tgz -o coscale-app-0.1.0.tgz -sS
 
-helm install --name CoScaleDataServices --wait --timeout 1800 coscale-data-services-0.1.0.tgz
+helm install --name coscale-data --wait --timeout 1800 coscale-data-services-0.1.0.tgz
 
 # Initialise the keyspace in Cassandra
 cat << EOF | kubectl create -f -
@@ -46,7 +46,7 @@ spec:
       restartPolicy: Never
 EOF
 
-helm install --name CoScaleAppServices --wait --timeout 1800 coscale-app-0.1.0.tgz
+helm install --name coscale-app --wait --timeout 1800 coscale-app-0.1.0.tgz
 
 API1=`kubectl get pods -l app=cs-api -o jsonpath='{.items[0].metadata.name}'`
 kubectl exec $API1 python /opt/coscale/api/gen-superuser.py
